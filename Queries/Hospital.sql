@@ -1,0 +1,45 @@
+-- CREATE TABLE Doctors
+-- (
+--     Id INT IDENTITY PRIMARY KEY,
+--     FirstName VARCHAR(15) NOT NULL,
+--     LastName VARCHAR(20) NOT NULL,
+--     Email VARCHAR(128) NOT NULL,
+--     PhoneNumber VARCHAR(11) NOT NULL,
+--     IsDeleted BIT DEFAULT 0,
+--     CreatedAt DATETIME DEFAULT GETDATE(),
+--     LastModifiedDate DATETIME DEFAULT GETDATE()
+-- )
+
+-- ALTER PROCEDURE InsertDoctor
+--     @FirstName VARCHAR(15),
+--     @LastName VARCHAR(20),
+--     @Email VARCHAR(128),
+--     @PhoneNumber VARCHAR(11)
+-- AS
+-- INSERT INTO Doctors
+--     (FirstName, LastName, Email, PhoneNumber, CreatedAt)
+-- VALUES
+--     (@FirstName, @LastName, @Email, @PhoneNumber, GETDATE())
+-- GO
+
+-- ALTER TRIGGER InsteadOfUpdate
+-- ON Doctors
+-- AFTER UPDATE
+-- AS
+-- BEGIN
+-- UPDATE Doctors
+-- SET LastModifiedDate = GETDATE()
+-- WHERE Id IN (SELECT Id FROM inserted)
+-- END
+
+-- ALTER TRIGGER InsteadOfDelete
+-- ON Doctors
+-- INSTEAD OF DELETE
+-- AS
+-- BEGIN
+-- UPDATE Doctors
+-- SET IsDeleted = 1
+-- WHERE Id IN (SELECT Id FROM deleted)
+-- END
+
+-- EXEC InsertDoctor 'Silbeni', 'delete me', 'deleteeee', '???'
