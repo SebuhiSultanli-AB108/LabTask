@@ -1,0 +1,49 @@
+﻿@model SliderItemVM
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h6 class="m-0 font-weight-bold text-primary">Create</h6>
+        <a asp-controller="Table" asp-action="Index" class="btn btn-secondary p-2 fs-1" style="block-size: 20">&lt; Back</a>
+    </div>
+    <div class="card-body">
+        <form enctype="multipart/form-data" method="post">
+            <div class="form-row" style="margin-top: 20px">
+                <label asp-for="Title"></label>
+                <input class="form-control" asp-for="Title">
+                <span class="text-danger" asp-validation-for="Title"></span>
+            </div>
+            <div class="form-row" style="margin-top: 20px">
+                <label asp-for="ShortDescription"></label>
+                <input class="form-control" asp-for="ShortDescription">
+                <span class="text-danger" asp-validation-for="ShortDescription"></span>
+            </div>
+            <div class="form-row" style="margin-top: 20px">
+                <label asp-for="Description"></label>
+                <input class="form-control" asp-for="Description">
+                <span class="text-danger" asp-validation-for="Description"></span>
+            </div>
+            <div class="form-row" style="margin-top: 20px">
+                <label asp-for="Price"></label>
+                <input class="form-control" asp-for="Price">
+                <span class="text-danger" asp-validation-for="Price"></span>
+            </div>
+            <div class="form-row" style="margin-top: 20px">
+                <label asp-for="ImgPath"></label>
+                <input class="form-control" asp-for="ImgPath">
+                <span class="text-danger" asp-validation-for="ImgPath"></span>
+            </div>
+            <div class="form-row" style="margin-top: 20px">
+                <label asp-for="s"></label>
+                <input class="form-control" asp-for="s">
+                <span class="text-danger" asp-validation-for="s"></span>
+            </div>
+            <div class="form-row" style="margin-top: 20px">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+

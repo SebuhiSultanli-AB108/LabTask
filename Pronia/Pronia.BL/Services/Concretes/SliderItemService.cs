@@ -26,9 +26,11 @@ public class SliderItemService : ISliderItemService
         return sliderItems;
     }
 
-    public Task<SliderItem> GetSliderByIdAsync(int id)
+    public async Task<SliderItem> GetSliderByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        SliderItem sliderItem = await _context.SliderItems.FindAsync(id);
+        if (sliderItem == null) throw new Exception($"Didn't find the slider item by this id:{id}");
+        return sliderItem;
     }
 
     public async Task HardDeleteSliderItemAsync(int id)
@@ -52,6 +54,8 @@ public class SliderItemService : ISliderItemService
             throw new Exception("Slider item not found!");
 
         baseSliderItem.IsDeleted = true;
+        baseSliderItem.LastModifiedDate = DateTime.Now;
+        baseSliderItem.DeleteDate = DateTime.Now;
         await _context.SaveChangesAsync();
     }
 
