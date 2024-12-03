@@ -12,11 +12,10 @@ public class SliderController(MediPlusDbContext _context, IWebHostEnvironment _e
     {
         return View(await _context.sliderItems.ToListAsync());
     }
-    public IActionResult Create()
-    {
-        return View();
-    }
+    public IActionResult Create() { return View(); }
+    public IActionResult Update() { return View(); }
 
+    [HttpPost]
     public async Task<IActionResult> Update(SliderCreateVM vm, int? id)
     {
         if (id == null) return BadRequest();
@@ -32,7 +31,7 @@ public class SliderController(MediPlusDbContext _context, IWebHostEnvironment _e
         }
         var updateiItem = await _context.sliderItems.Where(x => x.Id == id).FirstOrDefaultAsync();
         updateiItem.Title = vm.Title;
-        updateiItem.SubTitle = vm.Title;
+        updateiItem.SubTitle = vm.Subtitle;
         updateiItem.CreatedDate = DateTime.Now;
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));

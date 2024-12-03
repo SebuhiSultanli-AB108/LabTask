@@ -17,6 +17,7 @@
                         <th>Image</th>
                         <th>Title</th>
                         <th>Subtitle</th>
+                        <th>Created Date</th>
                         <th colspan="2">Actions</th>
                     </tr>
                 </thead>
@@ -25,10 +26,12 @@
                     {
                         <tr>
                             <td>@item.Id</td>
-                            <td><img style="max-width: 150px; max-height: 75px" src="~/imgs/sliders/@item.ImgUrl" alt="Alternate Text" /></td>
+                            <td><img style="max-width: 150px; max-height: 75px" src="~/home/sliderimgs/@item.ImgUrl" alt="Alternate Text" /></td>
                             <td>@item.Title</td>
                             <td>@item.SubTitle</td>
+                            <td>@item.CreatedDate</td>
                             <td><a class="btn btn-danger" asp-controller="Slider" asp-action="Delete" asp-route-id="@item.Id">Delete</a></td>
+                            <td><a class="btn btn-warning" asp-controller="Slider" asp-action="Update" asp-route-id="@item.Id">Update</a></td>
                         </tr>
                     }
                 </tbody>
