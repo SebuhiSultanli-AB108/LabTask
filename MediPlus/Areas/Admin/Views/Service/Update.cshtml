@@ -1,4 +1,4 @@
-﻿@model SliderItemVM
+﻿@model ServiceItemVM
 @{
     ViewData["Title"] = "Update";
 }
@@ -16,15 +16,15 @@
                 <span class="text-danger" asp-validation-for="Title"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SubTitle"></label>
-                <input class="form-control" value="@Model.SubTitle" asp-for="SubTitle">
-                <span class="text-danger" asp-validation-for="SubTitle"></span>
+                <label asp-for="Description"></label>
+                <input class="form-control" value="@Model.Description" asp-for="Description">
+                <span class="text-danger" asp-validation-for="Description"></span>
 
             </div>
             <div class="form-group">
-                <label asp-for="File"></label>
-                <input class="form-control" asp-for="File">
-                <span class="text-danger" asp-validation-for="File"></span>
+                <label asp-for="Icon"></label>
+                <input class="form-control" asp-for="Icon">
+                <span class="text-danger" asp-validation-for="Icon"></span>
 
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>

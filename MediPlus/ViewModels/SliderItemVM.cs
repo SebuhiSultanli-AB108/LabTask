@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MediPlus.ViewModels
+namespace MediPlus.ViewModels;
+
+public class SliderItemVM
 {
-    public class SliderItemVM
-    {
-        [MaxLength(64, ErrorMessage = "Max length must be 64")]
-        public string Title { get; set; }
-        [MaxLength(128, ErrorMessage = "Max length must be 64")]
-        public string SubTitle { get; set; }
-        public IFormFile File { get; set; }
-    }
+    [MaxLength(64, ErrorMessage = "Max length must be 64")]
+    public string Title { get; set; }
+    [MaxLength(128, ErrorMessage = "Max length must be 64")]
+    public string SubTitle { get; set; }
+    public IFormFile File { get; set; }
 }

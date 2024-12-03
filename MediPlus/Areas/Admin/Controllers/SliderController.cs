@@ -13,7 +13,14 @@ public class SliderController(MediPlusDbContext _context, IWebHostEnvironment _e
         return View(await _context.sliderItems.ToListAsync());
     }
     public IActionResult Create() { return View(); }
-    public IActionResult Update() { return View(); }
+    public async Task<IActionResult> Update(int? id)
+    {
+        SliderItemVM vm = new();
+        var data = _context.sliderItems.Find(id.Value);
+        vm.Title = data.Title;
+        vm.SubTitle = data.SubTitle;
+        return View(vm);
+    }
 
     [HttpPost]
     public async Task<IActionResult> Update(SliderCreateVM vm, int? id)
@@ -24,15 +31,21 @@ public class SliderController(MediPlusDbContext _context, IWebHostEnvironment _e
             ModelState.AddModelError("File", "Format type must be an image.");
             return View(vm);
         }
-        if (vm.File.Length > 2 * 1024 * 1024)
+        if (vm.File.Length > 200 * 1024 * 1024)
         {
             ModelState.AddModelError("File", "File size must be less than 2 MB.");
             return View(vm);
+        }
+        string newName = Path.GetRandomFileName() + Path.GetExtension(vm.File.FileName);
+        using (Stream stream = System.IO.File.Create(Path.Combine(_env.WebRootPath, "home", "sliderimgs", newName)))
+        {
+            await vm.File.CopyToAsync(stream);
         }
         var updateiItem = await _context.sliderItems.Where(x => x.Id == id).FirstOrDefaultAsync();
         updateiItem.Title = vm.Title;
         updateiItem.SubTitle = vm.Subtitle;
         updateiItem.CreatedDate = DateTime.Now;
+        updateiItem.ImgUrl = newName;
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
