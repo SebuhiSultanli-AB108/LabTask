@@ -12,9 +12,14 @@ public class ServiceController(MediPlusDbContext _context) : Controller
     {
         return View(await _context.serviceItems.ToListAsync());
     }
-    public IActionResult Create() { return View(); }
+    public async Task<IActionResult> Create()
+    {
+        ViewBag.Categories = await _context.departments.ToListAsync();
+        return View();
+    }
     public async Task<IActionResult> Update(int? id)
     {
+        ViewBag.Categories = await _context.departments.ToListAsync();
         ServiceItemVM vm = new();
         var data = _context.serviceItems.Find(id.Value);
         vm.Title = data.Title;
@@ -26,11 +31,17 @@ public class ServiceController(MediPlusDbContext _context) : Controller
     public async Task<IActionResult> Create(ServiceItemVM vm)
     {
         if (!ModelState.IsValid) return View(vm);
+        if (!await _context.departments.AnyAsync(x => x.Id == vm.DepartmentId))
+        {
+            ModelState.AddModelError("DepartmentId", "Department not found.");
+            return View();
+        }
         ServiceItem serviceItem = new ServiceItem
         {
             Title = vm.Title,
             Description = vm.Description,
             Icon = vm.Icon,
+            DepartmentId = vm.DepartmentId,
         };
         await _context.serviceItems.AddAsync(serviceItem);
         await _context.SaveChangesAsync();
@@ -51,9 +62,15 @@ public class ServiceController(MediPlusDbContext _context) : Controller
         if (id == null) return BadRequest();
         var updateable = await _context.serviceItems.Where(x => x.Id == id).FirstOrDefaultAsync();
         if (updateable == null) return NotFound();
+        if (!await _context.departments.AnyAsync(x => x.Id == vm.DepartmentId))
+        {
+            ModelState.AddModelError("DepartmentId", "Department not found.");
+            return View();
+        }
         updateable.Title = vm.Title;
         updateable.Description = vm.Description;
         updateable.Icon = vm.Icon;
+        updateable.DepartmentId = vm.DepartmentId;
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }

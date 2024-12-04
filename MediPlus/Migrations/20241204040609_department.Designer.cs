@@ -4,6 +4,7 @@ using MediPlus.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediPlus.Migrations
 {
     [DbContext(typeof(MediPlusDbContext))]
-    partial class MediPlusDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241204040609_department")]
+    partial class department
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,13 +59,6 @@ namespace MediPlus.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DepartmentName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -79,8 +75,6 @@ namespace MediPlus.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
 
                     b.ToTable("serviceItems");
                 });
@@ -116,20 +110,6 @@ namespace MediPlus.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("sliderItems");
-                });
-
-            modelBuilder.Entity("MediPlus.Models.ServiceItem", b =>
-                {
-                    b.HasOne("MediPlus.Models.Department", "Department")
-                        .WithMany("ServiceItems")
-                        .HasForeignKey("DepartmentId");
-
-                    b.Navigation("Department");
-                });
-
-            modelBuilder.Entity("MediPlus.Models.Department", b =>
-                {
-                    b.Navigation("ServiceItems");
                 });
 #pragma warning restore 612, 618
         }

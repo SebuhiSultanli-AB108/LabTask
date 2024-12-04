@@ -7,6 +7,7 @@ namespace MediPlus.DataAccess
     {
         public DbSet<SliderItem> sliderItems { get; set; }
         public DbSet<ServiceItem> serviceItems { get; set; }
+        public DbSet<Department> departments { get; set; }
         public MediPlusDbContext(DbContextOptions options) : base(options) { }
     }
 }
